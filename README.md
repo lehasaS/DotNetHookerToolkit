@@ -2,8 +2,9 @@
 
 This repository contains two projects that are designed to be used together:
 
-* [InjectorCli](/InjectorCli/): a **.NET Framework 4.8** console injector built on [frida-clr](https://github.com/frida/frida-clr) (`Frida.dll`)
-* [ManagedHookHostProj](/ManagedHookHostProj/): a **.NET Framework 4.8** helper DLL with **native exports** (via  [3F .NET DllExport](https://github.com/3F/DllExport)) used to resolve managed methods to native entrypoints so Frida can attach
+* [InjectorCli](/InjectorCli/): A **.NET Framework 4.8** console injector built on [frida-clr](https://github.com/frida/frida-clr) (`Frida.dll`)
+* [ManagedHookHostProj](/ManagedHookHostProj/): A **.NET Framework 4.8** helper DLL with **native exports** (via  [3F .NET DllExport](https://github.com/3F/DllExport)) used to resolve managed methods to native entrypoints so Frida can attach
+* [TestTarget32](/Example/TestTarget32/): An example **.NET Framework 4.8** program to test the hooking against.
 
 These projects target Windows and assume you are instrumenting processes you own or have permission to test.
 
@@ -144,3 +145,7 @@ FridaClrInjector.exe --pid 1234 --script "C:\path\to\hook_managed.js"
   * [Helper DLL README](/ManagedHookHostProj/README.md)
   * [How-it-works](/ManagedHookHostProj/hook-host-docs/how-it-works.md)
   * [Troubleshooting](/ManagedHookHostProj/hook-host-docs/build-and-troubleshooting.md)
+
+* Example Test Target docs:
+  * [TestTarget32 README](/Example/TestTarget32/README.md)
+  * [Running test cases](/Example/TestTarget32/docs/running-test-cases.md)
