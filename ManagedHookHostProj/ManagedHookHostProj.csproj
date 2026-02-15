@@ -58,7 +58,7 @@
     <None Include="README.md" />
     <None Include="docs\build-and-troubleshooting.md" />
     <None Include="docs\how-it-works.md" />
-    <None Include="agent\resolve_and_trace_managed.js" />
+    <None Include="agent\hook_managed.js" />
   </ItemGroup>
 
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

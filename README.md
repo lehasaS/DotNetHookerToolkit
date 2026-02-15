@@ -115,7 +115,7 @@ FridaClrInjector.exe --spawn "C:\Windows\SysWOW64\notepad.exe" --script hooks\ho
 
 ### 5) Run: Managed method resolution + tracing (uses the helper DLL)
 
-* You should first edit [resolve_and_trace_managed.js](/ManagedHookHostProj/agent/resolve_and_trace_managed.js), by setting:
+* You should first edit [hook_managed.js](/ManagedHookHostProj/agent/hook_managed.js), by setting:
 
   * `helperDllPath` to the built `ManagedHookHostProj.dll`
   * `targetAssemblyPath`, `targetTypeName`, `targetMethodName`, `paramSig`
@@ -123,7 +123,7 @@ FridaClrInjector.exe --spawn "C:\Windows\SysWOW64\notepad.exe" --script hooks\ho
 * Then run:
 
 ```cmd
-FridaClrInjector.exe --pid 1234 --script "C:\path\to\resolve_and_trace_managed.js"
+FridaClrInjector.exe --pid 1234 --script "C:\path\to\hook_managed.js"
 ```
 
 ## Limitations

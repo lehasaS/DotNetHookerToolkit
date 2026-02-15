@@ -68,11 +68,11 @@ You should see exports like:
 
 ![Exported functions in ManagedHookHostProj.dll](/images/ManagedHookHostProjDllExports.png)
 
-On **x86 + StdCall**, some toolchains decorate export names (e.g. `_ResolveMethod@16`). The provided agent [resolve_and_trace_managed.js](agent/resolve_and_trace_managed.js) includes a fallback that will locate decorated names if needed.
+On **x86 + StdCall**, some toolchains decorate export names (e.g. `_ResolveMethod@16`). The provided agent [hook_managed.js](agent/hook_managed.js) includes a fallback that will locate decorated names if needed.
 
 # Usage With the Injector
 For usage with the injector project and further details, see:
 
-* [resolve_and_trace_managed.js](agent/resolve_and_trace_managed.js)
+* [hook_managed.js](agent/hook_managed.js)
 * [how-it-works.md](hook-host-docs/how-it-works.md)
 * [build-and-troubleshooting.md](hook-host-docs/build-and-troubleshooting.md)
