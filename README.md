@@ -26,25 +26,29 @@ So the overall pattern is:
 
 ## How They Work Together (Data Flow)
 
-### InjectorCli (C#)
+**InjectorCli (C#)**
 
-* Creates `Frida.DeviceManager` and selects a device
-* Spawns or attaches to a process
-* Creates a `Frida.Script` from your JavaScript file and loads it
-* Prints messages from the agent via `script.Message`
+- creates `Frida.DeviceManager` and selects a device
+- spawns or attaches to a process
+- creates a `Frida.Script` from your JavaScript file and loads it
+- prints messages from the agent via `script.Message`
 
-### Agent (JavaScript)
+**Agent (JavaScript)**
 
-* Can hook normal Win32 APIs directly (e.g. `CreateFileW`, `MessageBoxW`)
-* Can optionally `Module.load()` the managed helper DLL
-* Calls exported helpers (e.g. `ResolveMethod`) via `NativeFunction`
-* Uses returned addresses to attach hooks
+- can hook normal Win32 APIs directly (e.g. `CreateFileW`, `MessageBoxW`)
+- can optionally `Module.load()` the managed helper DLL
+- calls exported helpers (e.g. `ResolveMethod`) via `NativeFunction`
+- uses helper-managed UTF-16 buffers (`DescribeObjectUtf16` + `FreeUtf16`) instead of CLR string layout parsing
+- can query helper diagnostics using `GetLastErrorUtf16` when resolution fails
+- uses returned addresses to attach hooks
 
-###  ManagedHookHostProj (C# class library with exports)
+**ManagedHookHostProj (C# class library with exports)**
 
-* Runs inside the target’s CLR
-* Uses reflection to locate the method you want by name (+ optional overload signature)
-* Forces JIT compilation and returns the native entrypoint address
+- runs inside the target’s CLR
+- uses reflection to locate the method you want by name (+ optional overload signature)
+- forces JIT compilation and returns the native entrypoint address
+- provides safe primitive read/write exports for by-ref values (`ReadInt32` / `WriteInt32` / `WriteBool`)
+- exposes thread-local helper diagnostics (`GetLastErrorUtf16`, `ClearLastError`)
 
 ## Quick Start (32-bit target)
 
@@ -132,7 +136,7 @@ FridaClrInjector.exe --pid 1234 --script "C:\path\to\hook_managed.js"
 * **Inlining**: small methods may be inlined in Release builds, and your hook won’t trigger.
 * **Overloads**: use `paramSig` to select the correct overload, otherwise you may hook the wrong one.
 * **Bitness must match**: x86 target requires x86 injector + x86 `Frida.dll` + x86 helper DLL.
-* **Managed object refs are fragile**: the helper’s object-ref helpers are best-effort and should only be used for short-lived logging.
+* **Raw managed refs are fragile**: legacy helper exports (`MakeString`/`Box*`/`DescribeObject`) should be treated as compatibility-only.
 
 ## More Documentation
 
